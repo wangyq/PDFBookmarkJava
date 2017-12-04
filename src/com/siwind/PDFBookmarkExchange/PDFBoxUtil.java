@@ -10,9 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionGoTo;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDDestination;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDNamedDestination;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDPageDestination;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDPageFitDestination;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDPageFitWidthDestination;
@@ -38,9 +41,17 @@ public class PDFBoxUtil {
             }
             if (current.getAction() instanceof PDActionGoTo) {
                 PDActionGoTo gta = (PDActionGoTo) current.getAction();
-                if (gta.getDestination() instanceof PDPageDestination) {
-                    PDPageDestination pd = (PDPageDestination) gta.getDestination();
+                PDDestination dst = gta.getDestination();
+                if (dst instanceof PDPageDestination) {
+                    PDPageDestination pd = (PDPageDestination) dst;
                     item.setPageNum(pd.retrievePageNumber()); //real page index start from 0
+                } else if( dst instanceof PDNamedDestination ){ //can not get name destination's page number,javascript will be ok!
+                    PDNamedDestination pd = (PDNamedDestination) dst;
+                    //System.out.println("Named Destionation: " + pd.getNamedDestination());
+                    //COSName csname = COSName.getPDFName(pd.getNamedDestination());
+                    //System.out.println("Named Destionation: " + csname.toString());
+                }else{//nothing to do!
+                    
                 }
             }
             items.add(item);

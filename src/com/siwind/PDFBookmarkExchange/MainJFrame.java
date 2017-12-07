@@ -315,8 +315,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
         try {
+            RFile rFile = RFile.TXTOPEN;
+            
             // TODO add your handling code here:
-            String strFile = FileChooser(this.getContentPane(), "TXT file (UTF-8 encode)(*.txt)", "txt", true, "Open Text File",RFile.TXTOPEN.getFile());
+            String strFile = FileChooser(this.getContentPane(), "TXT file (UTF-8 encode)(*.txt)", "txt", true, "Open Text File",rFile.getFile());
             if (strFile.isEmpty()) {
                 return;
             }
@@ -330,7 +332,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
             this.checkBasePage(this.jTextBookmark.getText()); //reset basePage
             
-            RFile.TXTOPEN.setFile(strFile); //
+            rFile.setFile(strFile); //
             
         } catch (Exception ex) {
 
@@ -342,7 +344,9 @@ public class MainJFrame extends javax.swing.JFrame {
         PrintWriter out = null;
         try {
             // TODO add your handling code here:
-            String strFile = FileChooser(this.getContentPane(), "TXT file (UTF-8 encode)(*.txt)", "txt", false, "Save Text File",RFile.TXTSAVE.getFile());
+            RFile rFile = RFile.TXTSAVE;
+            
+            String strFile = FileChooser(this.getContentPane(), "TXT file (UTF-8 encode)(*.txt)", "txt", false, "Save Text File",rFile.getFile());
             if (strFile.isEmpty()) {
                 return;
             }
@@ -350,7 +354,7 @@ public class MainJFrame extends javax.swing.JFrame {
             out = new PrintWriter(new File(strFile), "UTF-8");
             out.println(this.jTextBookmark.getText());
             JOptionPane.showMessageDialog(null, "Save finished! \n\n\t" + strFile);
-            RFile.TXTSAVE.setFile(strFile); //
+            rFile.setFile(strFile); //
         } catch (Exception ex) {
         } finally {
             try {
@@ -364,7 +368,8 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            String strFile = FileChooser(this.getContentPane(), "PDF file (*.pdf)", "pdf", true, "Load PDF File",RFile.PDFOPEN.getFile());
+            RFile rFile = RFile.PDFOPEN;
+            String strFile = FileChooser(this.getContentPane(), "PDF file (*.pdf)", "pdf", true, "Load PDF File",rFile.getFile());
             if (strFile.isEmpty()) {
                 return;
             }
@@ -375,7 +380,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 return;
             }
             this.jTextBookmark.setText(str);
-            RFile.PDFOPEN.setFile(strFile); //
+            rFile.setFile(strFile); //
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -389,8 +394,8 @@ public class MainJFrame extends javax.swing.JFrame {
             String pdfPage = this.jTextPDFPage.getText();
             int basePage = PDFBookmarkManager.getBasePage(bkmPage, pdfPage);
             //JOptionPane.showMessageDialog(null, "Page Number Offset is: \t\t" + (basePage+1));
-            
-            String strFile = FileChooser(this.getContentPane(), "PDF file (*.pdf)", "pdf", false, "Save PDF File",RFile.PDFSAVE.getFile());
+            RFile rFile = RFile.PDFSAVE;
+            String strFile = FileChooser(this.getContentPane(), "PDF file (*.pdf)", "pdf", false, "Save PDF File",rFile.getFile());
             if (strFile.isEmpty()) {
                 return;
             }
@@ -401,7 +406,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
             PDFBookmarkManager.saveBookmarkStringToPDF(strFile, str, basePage);
             JOptionPane.showMessageDialog(null, "Save PDF finished!");
-            RFile.PDFSAVE.setFile(strFile); //
+            rFile.setFile(strFile); //
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

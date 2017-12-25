@@ -118,6 +118,65 @@ public class StringUtil {
         return str.substring(0, i); //
     }
     
+    /**
+     * filtr non-number char from start and end of string.
+     * @param str
+     * @return 
+     */
+    public static String acquireNumber(String str){
+        String res = "";
+        if( null == str || str.isEmpty() ) return res;
+        
+        int start = 0, end = 0;
+        boolean bHead = true, bSign=false;
+        char ch;
+        for(int i=0;i<str.length();i++){
+            ch = str.charAt(i);
+            if( bHead ){ //find number's head
+                if( ch == '-' || ch=='+' ){
+                    bSign = true;
+                    start = i;
+                }
+                else if( '0'<=ch && ch <='9'){
+                    bHead = false;
+                    if( !bSign ) start = i; //no sign char, start from here!
+                    end = str.length();  //assume end is valid now!
+                }
+            }else{
+                if( '0'> ch ||  ch > '9') {
+                    end = i;
+                    break;
+                }
+            } //end of if head/tail
+        }//end of for
+        if( end > start ){
+            res = str.substring(start, end); //
+        }
+        return res;
+    }
+    
+    public static String filterNumber(String str, String filter){
+        String res = "";
+        if( null == str || str.isEmpty() ) return res;
+        
+        int start=0,end=str.length();
+        for(int i=0;i<str.length();i++){
+            String s = str.substring(i,i+1);
+            if( filter.contains(s)) continue; //
+            start = i; //
+            break;
+        }
+        for(int i=str.length()-1;i>=0;i--){
+            String s = str.substring(i,i+1);
+            if( filter.contains(s)) continue; //
+            end = i+1; //
+            break;
+        }
+        if( start < end){
+            res = str.substring(start,end);
+        }
+        return res;
+    }
     public static boolean isInteger(String input){  
         Matcher mer = Pattern.compile("^[+-]?[0-9]+$").matcher(input);  
         return mer.find();  

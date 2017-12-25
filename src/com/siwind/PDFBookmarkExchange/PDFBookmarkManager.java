@@ -116,8 +116,9 @@ public class PDFBookmarkManager {
                 item.setName(sName); //name
             }
             if (ss.length >= 2) {
-                if (StringUtil.isInteger(ss[1].trim())) {
-                    item.setPageNum(Integer.valueOf(ss[1].trim()) + basePage - 1); //real page number start from 0.
+                String s = StringUtil.filterNumber(ss[1],"/\\").trim(); // 去掉头尾的/和\字符(能否去掉非数字字符, 留下数字页码呢)
+                if (StringUtil.isInteger(s) ) { //
+                    item.setPageNum(Integer.valueOf(s) + basePage - 1); //real page number start from 0.
                 } else{
                     throw new Exception("Incorrect Bookmark: \t" + line);
                 }

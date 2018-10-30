@@ -93,7 +93,8 @@ public class PDFBoxUtil {
         bookmark.setTitle(item.getName());
 
         if (item.isPageNumOK()) {//page set!
-            PDPageDestination dst = new PDPageFitWidthDestination(); //PDPageFitDestination();
+            PDPageFitDestination dst = new PDPageFitDestination(); //PDPageFitWidthDestination(); //PDPageFitDestination();
+            dst.setFitBoundingBox(true);
             dst.setPageNumber(item.getPageNum());
             bookmark.setDestination(dst);
         }
@@ -196,7 +197,7 @@ public class PDFBoxUtil {
                 PDActionGoTo gta = (PDActionGoTo) current.getAction();
                 if (gta.getDestination() instanceof PDPageDestination) {
                     PDPageDestination pd = (PDPageDestination) gta.getDestination();
-                    System.out.println(indentation + "Destination page: " + (pd.retrievePageNumber() + 1));
+                    System.out.println(indentation + "GoToAction Destination page: " + (pd.retrievePageNumber() + 1));
                 }
             }
             System.out.println(indentation + current.getTitle());

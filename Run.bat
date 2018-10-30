@@ -1,2 +1,2 @@
 ::@ECHO OFF
-START javaw.exe -jar PDFBookmark.jar
+START javaw.exe  -Xms64m -Xmx1024m -jar PDFBookmark.jar

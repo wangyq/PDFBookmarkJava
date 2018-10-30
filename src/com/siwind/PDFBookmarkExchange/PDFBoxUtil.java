@@ -93,10 +93,16 @@ public class PDFBoxUtil {
         bookmark.setTitle(item.getName());
 
         if (item.isPageNumOK()) {//page set!
-            PDPageFitDestination dst = new PDPageFitDestination(); //PDPageFitWidthDestination(); //PDPageFitDestination();
-            dst.setFitBoundingBox(true);
+            PDPageDestination dst = new PDPageFitWidthDestination(); //PDPageFitDestination();
+            //dst.setFitBoundingBox(true);
             dst.setPageNumber(item.getPageNum());
+            
+            //PDActionGoTo action = new PDActionGoTo();
+            //action.setDestination(dst);
+            //bookmark.setAction(action);
+            
             bookmark.setDestination(dst);
+            
         }
         return bookmark;
     }

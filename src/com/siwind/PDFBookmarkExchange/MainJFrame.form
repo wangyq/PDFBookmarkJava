@@ -195,7 +195,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelVersion">
       <Properties>
-        <Property name="text" type="java.lang.String" value="PDFBookmark-Exchanger(ver 1.0.2)"/>
+        <Property name="text" type="java.lang.String" value="PDFBookmark-Exchanger(ver 1.0.2-final)"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionGoTo;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDDestination;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination.PDNamedDestination;
@@ -88,39 +89,41 @@ public class PDFBoxUtil {
         return bOK;
     }
 
-    private static PDOutlineItem makeBookmarkItem(BookmarkItem item) {
+    private static PDOutlineItem makeBookmarkItem(PDPageTree pdTree, BookmarkItem item) {
         PDOutlineItem bookmark = new PDOutlineItem();
         bookmark.setTitle(item.getName());
 
         if (item.isPageNumOK()) {//page set!
-            PDPageDestination dst = new PDPageFitWidthDestination(); //PDPageFitDestination();
+            //PDPageDestination dst = new PDPageFitDestination();// PDPageFitWidthDestination(); 
             //dst.setFitBoundingBox(true);
-            dst.setPageNumber(item.getPageNum());
+            //dst.setPageNumber(item.getPageNum());
+            //bookmark.setDestination(dst);
             
             //PDActionGoTo action = new PDActionGoTo();
             //action.setDestination(dst);
             //bookmark.setAction(action);
             
-            bookmark.setDestination(dst);
+            
+            bookmark.setDestination(pdTree.get(item.getPageNum()));
             
         }
         return bookmark;
     }
 
-    private static int saveBookmarkLevel(PDOutlineNode bknode, int level, ArrayList<BookmarkItem> items, int index) throws IOException {
+    private static int saveBookmarkLevel(PDPageTree pdTree, PDOutlineNode bknode, int level, ArrayList<BookmarkItem> items, int index) throws IOException {
         while (index < items.size()) {
             BookmarkItem item = items.get(index);
             if (level > item.getLevel()) {
                 break; //end now!
             } else if (level == item.getLevel()) {
-                bknode.addLast(makeBookmarkItem(item)); //add bookmark
+                bknode.addLast(makeBookmarkItem(pdTree, item)); //add bookmark
                 index ++; //next 
             } else if (null == bknode.getLastChild()) {// Error here!
-                bknode.addLast(makeBookmarkItem(item)); //add bookmark
+                bknode.addLast(makeBookmarkItem(pdTree, item)); //add bookmark
                 index++;
                 break;
             } else {
-                index = saveBookmarkLevel(bknode.getLastChild(), level + 1, items, index); //sub item
+                index = saveBookmarkLevel(pdTree, bknode.getLastChild(), level + 1, items, index); //sub item
             }
         } //end of while
         return index;
@@ -137,10 +140,12 @@ public class PDFBoxUtil {
             if (document.isEncrypted()) {
                 throw new Exception("Error: can not add bookmark to Encrypted PDF file."); //no support!
             }
+                        
             PDDocumentOutline outline = new PDDocumentOutline();
             document.getDocumentCatalog().setDocumentOutline(outline);
-
-            saveBookmarkLevel(outline, 0, items, 0); //sub level
+            
+            PDPageTree pdTree = document.getPages();
+            saveBookmarkLevel(pdTree,outline, 0, items, 0); //sub level
 
             document.save(strFile);
 

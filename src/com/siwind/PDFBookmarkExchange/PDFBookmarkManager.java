@@ -31,7 +31,6 @@ public class PDFBookmarkManager {
     static final String BASEPAGE_STRING = "basePage = ";
 
     static final String HEAD_STRING = "#==================================================" + CR_NL
-    		+ "# PDFBookmark (ver 1.0.2-final)" + CR_NL
             + "# Mail:  yinqingwang@gmail.com"  + CR_NL
             + "# Author: siwind" + CR_NL
             + "# Url: http://blog.csdn.net/yinqingwang" + CR_NL

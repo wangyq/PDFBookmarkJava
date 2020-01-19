@@ -7,7 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/pdfbox-2.0.12.jar"/>
 	<classpathentry kind="lib" path="lib/pdfbox-2.0.18.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

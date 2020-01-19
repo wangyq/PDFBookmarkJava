@@ -26,7 +26,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainJFrame extends javax.swing.JFrame {
 
-    enum RFile { //Recently  used file
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8708725591147571438L;
+	
+	enum RFile { //Recently  used file
         PDFOPEN(0), PDFSAVE(1), TXTOPEN(2), TXTSAVE(3);
         
         //
@@ -336,6 +341,8 @@ public class MainJFrame extends javax.swing.JFrame {
             
         } catch (Exception ex) {
 
+        } finally {
+        	
         }
     }//GEN-LAST:event_btnOpenActionPerformed
 

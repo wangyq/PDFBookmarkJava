@@ -72,7 +72,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     };
 
-    private static final String TITLE_PROGRAM = "PDFBOOKMARK-Exchanger (Import/Export Bookmark)";
+    private static final String TITLE_PROGRAM = "PDFBookmark v1.0.2-final (Import/Export Bookmark)";
 
     /**
      * Creates new form MainJFrame
